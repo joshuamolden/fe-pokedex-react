@@ -8,6 +8,7 @@ function PageButton(props: any): React.ReactElement {
       {props.displayButton ? (
         props.direction === "left" ? (
           <IconButton
+            onClick={props.onClick}
             aria-label="Back"
             icon={<ArrowBackIcon fontSize="30px" />}
             borderRadius="50%"
@@ -19,6 +20,7 @@ function PageButton(props: any): React.ReactElement {
           />
         ) : (
           <IconButton
+            onClick={props.onClick}
             aria-label="Forward"
             icon={<ArrowForwardIcon fontSize="30px" />}
             borderRadius="50%"

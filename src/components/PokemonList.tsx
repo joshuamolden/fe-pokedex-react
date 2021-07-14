@@ -157,7 +157,7 @@ function ListPokemon(): React.ReactElement {
               flex="1"
               direction={"left"}
               displayButton={links?.prev}
-              onAction={() => {
+              onClick={() => {
                 handlePageChange(true, links?.prev);
               }}
             />
@@ -174,7 +174,7 @@ function ListPokemon(): React.ReactElement {
               flex="1"
               direction={"right"}
               displayButton={links?.next}
-              onAction={() => {
+              onClick={() => {
                 handlePageChange(false, links?.next);
               }}
             />
