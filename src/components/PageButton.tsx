@@ -11,20 +11,22 @@ function PageButton(props: any): React.ReactElement {
             aria-label="Back"
             icon={<ArrowBackIcon fontSize="30px" />}
             borderRadius="50%"
-            bgColor="background.500"
+            bgColor="background.900"
             h="50px"
             w="50px"
             color="white"
+            _focus={{ border: "none" }}
           />
         ) : (
           <IconButton
             aria-label="Forward"
             icon={<ArrowForwardIcon fontSize="30px" />}
             borderRadius="50%"
-            bgColor="background.500"
+            bgColor="background.900"
             h="50px"
             w="50px"
             color="white"
+            _focus={{ border: "none" }}
           />
         )
       ) : (

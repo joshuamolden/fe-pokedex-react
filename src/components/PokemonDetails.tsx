@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../pokemonTypes.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import {
   Box,
   Container,
@@ -40,7 +40,7 @@ const adjustStat = (value: string) => {
   return (Number(value) / maxStat) * 100;
 };
 
-function PokemonDetails(props: any): React.ReactElement {
+function PokemonDetails(): React.ReactElement {
   // used to store information returned from api call made for a specific pokemon
   const [pokemonDetails, setPokemonDetails] = useState<Record<string, any>>();
 
@@ -62,7 +62,7 @@ function PokemonDetails(props: any): React.ReactElement {
   const [type, setType] = useState<string>("");
 
   // stores information about the state of the page we just came from
-  // const { state } = useLocation();
+  const { state } = useLocation();
 
   // api call used to retrieve specific pokemon data
   useEffect(() => {
@@ -96,7 +96,9 @@ function PokemonDetails(props: any): React.ReactElement {
       <Heading as="h1" display="flex" justifyContent="center" flexDir="row">
         <Flex flex="1" justifyContent="flex-end" mt="75px" mb="50px">
           <Flex flex="1" justifyContent="center" alignItems="center">
-            <Link to={"/v1/pokemon/1"}>
+            <Link
+              to={`/?search=${state?.searchValue}&page=${state?.currentPage}`}
+            >
               <IconButton
                 aria-label="Back"
                 _focus={{}}

@@ -2,128 +2,128 @@
     Different types of pokemon and their colors
 */
 .bug {
-    color: #a8b821;
-    background: #a8b82133;
-    border: 1px solid #a8b82180;
-    width: 40px;
-    font-weight: bold;
+  color: #a8b821;
+  background: #a8b82133;
+  border: 1px solid #a8b82180;
+  width: 50px;
+  font-weight: bold;
 }
 
 .dark {
-    color: #705847;
-    background: #70584733;
-    border: 1px solid #70584780;
-    font-weight: bold;
+  color: #705847;
+  background: #70584733;
+  border: 1px solid #70584780;
+  font-weight: bold;
 }
 
 .dragon {
-    color: #7037f8;
-    background: #7037f833;
-    border: 1px solid #7037f880;
-    font-weight: bold;
+  color: #7037f8;
+  background: #7037f833;
+  border: 1px solid #7037f880;
+  font-weight: bold;
 }
 
 .electric {
-    color: #f8cf31;
-    background: #f8cf3133;
-    border: 1px solid #f8cf3180;
-    font-weight: bold;
+  color: #f8cf31;
+  background: #f8cf3133;
+  border: 1px solid #f8cf3180;
+  font-weight: bold;
 }
 
 .fairy {
-    color: #dea5dd;
-    background: #dea5dd33;
-    border: 1px solid #dea5dd80;
-    font-weight: bold;
-} 
+  color: #dea5dd;
+  background: #dea5dd33;
+  border: 1px solid #dea5dd80;
+  font-weight: bold;
+}
 
 .fighting {
-    color: #8f6760;
-    background: #8f676033;
-    border: 1px solid #8f676080;
-    font-weight: bold;
+  color: #8f6760;
+  background: #8f676033;
+  border: 1px solid #8f676080;
+  font-weight: bold;
 }
 
 .fire {
-    color: #f07f30;
-    background: #f07f3033;
-    border: 1px solid #f07f3080;
-    font-weight: bold;
+  color: #f07f30;
+  background: #f07f3033;
+  border: 1px solid #f07f3080;
+  font-weight: bold;
 }
 
 .flying {
-    color: #a890ef;
-    background: #a890ef33;
-    border: 1px solid #a890ef80;
-    font-weight: bold;
+  color: #a890ef;
+  background: #a890ef33;
+  border: 1px solid #a890ef80;
+  font-weight: bold;
 }
 
 .ghost {
-    color: #705798;
-    background: #70579833;
-    border: 1px solid #70579880;
-    font-weight: bold;
+  color: #705798;
+  background: #70579833;
+  border: 1px solid #70579880;
+  font-weight: bold;
 }
 
 .grass {
-    color: #78c850;
-    background: #78c85033;
-    border: 1px solid #78c85080;
-    font-weight: bold;
+  color: #78c850;
+  background: #78c85033;
+  border: 1px solid #78c85080;
+  font-weight: bold;
 }
 
 .ground {
-    color: #e0bf68;
-    background: #e0bf6833;
-    border: 1px solid #e0bf6880;
-    font-weight: bold;
+  color: #e0bf68;
+  background: #e0bf6833;
+  border: 1px solid #e0bf6880;
+  font-weight: bold;
 }
 
 .ice {
-    color: #98d8d7;
-    background: #98d8d733;
-    border: 1px solid #98d8d780;
-    font-weight: bold;
+  color: #98d8d7;
+  background: #98d8d733;
+  border: 1px solid #98d8d780;
+  font-weight: bold;
 }
 
 .normal {
-    color: #a8a878;
-    background: #a8a87833;
-    border: 1px solid #a8a87880;
-    font-weight: bold;
+  color: #a8a878;
+  background: #a8a87833;
+  border: 1px solid #a8a87880;
+  font-weight: bold;
 }
 
 .psychic {
-    color: #f85888;
-    background: #f8588833;
-    border: 1px solid #f8588880;
-    font-weight: bold;
+  color: #f85888;
+  background: #f8588833;
+  border: 1px solid #f8588880;
+  font-weight: bold;
 }
 
 .poison {
-    color: #a040a0;
-    background: #a040a033;
-    border: 1px solid #a040a080;
-    font-weight: bold;
+  color: #a040a0;
+  background: #a040a033;
+  border: 1px solid #a040a080;
+  font-weight: bold;
 }
 
 .rock {
-    color: #b89f38;
-    background: #b89f3833;
-    border: 1px solid #b89f3880;
-    font-weight: bold;
+  color: #b89f38;
+  background: #b89f3833;
+  border: 1px solid #b89f3880;
+  font-weight: bold;
 }
 
 .steel {
-    color: #b8b8d0;
-    background: #b8b8d033;
-    border: 1px solid #b8b8d080;
-    font-weight: bold;
+  color: #b8b8d0;
+  background: #b8b8d033;
+  border: 1px solid #b8b8d080;
+  font-weight: bold;
 }
 
 .water {
-    color: #6890f0;
-    background: #6890f033;
-    border: 1px solid #6890f080;
-    font-weight: bold;
+  color: #6890f0;
+  background: #6890f033;
+  border: 1px solid #6890f080;
+  font-weight: bold;
 }

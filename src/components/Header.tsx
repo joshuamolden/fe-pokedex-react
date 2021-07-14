@@ -1,14 +1,15 @@
 import React from "react";
-import styled from "@emotion/styled";
-
-const HeaderDisplay = styled.h1`
-  margin-bottom: 50px;
-  display: flex;
-  justify-content: space-around;
-  height: 90px;
-`;
+import { Heading } from "@chakra-ui/layout";
 
 const Header = (props: any): React.ReactElement => (
-  <HeaderDisplay>{props.children}</HeaderDisplay>
+  <Heading
+    as="h1"
+    mb="50px"
+    display="flex"
+    justifyContent="space-around"
+    h="90px"
+  >
+    {props.children}
+  </Heading>
 );
 export default Header;

@@ -55,17 +55,16 @@ function Search(props: any): React.ReactElement {
   return (
     <Box
       borderRadius="30px"
-      bgColor="background.500"
+      bgColor="background.900"
       display="flex"
       alignItems="center"
     >
       {displayClear ? (
-        <Box display="flex" alignItems="center" gap="5%">
+        <Box display="flex" alignItems="center" gap="5%" w="500px">
           <Search2Icon
             color="background.200"
-            ml="5%"
-            mb="11px"
             fontSize="20px"
+            ml="20px"
           ></Search2Icon>
           <Input
             bgColog="background.500"
@@ -74,6 +73,8 @@ function Search(props: any): React.ReactElement {
             w="75%"
             fontSize="50px"
             outline="rgb(91, 169, 159)"
+            border="none"
+            _focus={{ border: "none" }}
             _placeholder={{
               color: "rgb(69, 136, 128)",
               textAlign: "center",
@@ -88,13 +89,15 @@ function Search(props: any): React.ReactElement {
           />
           <IconButton
             aria-label="Clear"
-            icon={<CloseIcon fontSize="156x" />}
+            icon={<CloseIcon fontSize="15x" />}
             display="flex"
+            mr="20px"
+            ml="20px"
             justifyContent="center"
             alignItems="center"
             bgColor="background.200"
             borderRadius="50%"
-            color="background.500"
+            color="background.900"
             id="clearButton"
             type="reset"
             onClick={handleClearSearch}
@@ -104,19 +107,15 @@ function Search(props: any): React.ReactElement {
         </Box>
       ) : (
         <Box display="flex" alignItems="center" gap="5%">
-          <Search2Icon
-            color="#cee4e1"
-            ml="5%"
-            mb="11px"
-            fontSize="20px"
-          ></Search2Icon>
+          <Search2Icon color="#cee4e1" fontSize="20px" ml="20px"></Search2Icon>
           <Input
             bgColog="background.500"
             color="white"
             maxH="100px"
             w="75%"
             fontSize="50px"
-            outline="rgb(91, 169, 159)"
+            border="none"
+            _focus={{ border: "none" }}
             _placeholder={{
               color: "rgb(69, 136, 128)",
               textAlign: "center",
