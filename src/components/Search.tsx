@@ -1,0 +1,137 @@
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Box } from "@chakra-ui/layout";
+import React from "react";
+import { CloseIcon, Search2Icon } from "@chakra-ui/icons";
+import { IconButton } from "@chakra-ui/button";
+import { Input } from "@chakra-ui/input";
+
+function Search(props: any): React.ReactElement {
+  // keeps track of the value of the search input
+  const [textValue, setTextValue] = useState("");
+
+  // used to display clear button once a search value is submitted
+  const [displayClear, setDisplayClear] = useState(false);
+
+  // grabs query string from url
+  const { search } = useLocation();
+
+  // sets value of input to the current search criterion
+  useEffect(() => {
+    const queryString = new URLSearchParams(search);
+    const searchParam = queryString.get("search");
+    if (searchParam) {
+      // will display clear button if refresh happens and there is a search criterion in url
+      setDisplayClear(true);
+    }
+    setTextValue(searchParam ?? "");
+  }, []);
+
+  // used to capture when a user presses enter to search for specific pokemon
+  const handleSearch = (e: any) => {
+    if (e.keyCode === 13) {
+      // 13 is the ascii value for the enter key
+      props.onSearch(e.target.value);
+      setDisplayClear(!displayClear);
+    }
+  };
+
+  // handles reset search box button
+  const handleClearSearch = () => {
+    if (textValue) {
+      // checks if there is any search value to clear
+      setTextValue(""); // set search value to empty
+      setDisplayClear(!displayClear); // removes clear button from the display
+      props.onClear();
+    }
+  };
+
+  // controls value of input tag and textValue
+  const setValue = (e: any) => {
+    setTextValue(e.target.value);
+  };
+
+  // search bar allows user to input string to search pokemon by
+  return (
+    <Box
+      borderRadius="30px"
+      bgColor="background.500"
+      display="flex"
+      alignItems="center"
+    >
+      {displayClear ? (
+        <Box display="flex" alignItems="center" gap="5%">
+          <Search2Icon
+            color="background.200"
+            ml="5%"
+            mb="11px"
+            fontSize="20px"
+          ></Search2Icon>
+          <Input
+            bgColog="background.500"
+            color="white"
+            maxH="100px"
+            w="75%"
+            fontSize="50px"
+            outline="rgb(91, 169, 159)"
+            _placeholder={{
+              color: "rgb(69, 136, 128)",
+              textAlign: "center",
+              fontWeight: "bold",
+              fontSize: "45px",
+            }}
+            placeholder="Pokedéx"
+            value={textValue}
+            onKeyUp={handleSearch}
+            onChange={setValue}
+            marginRight="0px"
+          />
+          <IconButton
+            aria-label="Clear"
+            icon={<CloseIcon fontSize="156x" />}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            bgColor="background.200"
+            borderRadius="50%"
+            color="background.500"
+            id="clearButton"
+            type="reset"
+            onClick={handleClearSearch}
+          >
+            X
+          </IconButton>
+        </Box>
+      ) : (
+        <Box display="flex" alignItems="center" gap="5%">
+          <Search2Icon
+            color="#cee4e1"
+            ml="5%"
+            mb="11px"
+            fontSize="20px"
+          ></Search2Icon>
+          <Input
+            bgColog="background.500"
+            color="white"
+            maxH="100px"
+            w="75%"
+            fontSize="50px"
+            outline="rgb(91, 169, 159)"
+            _placeholder={{
+              color: "rgb(69, 136, 128)",
+              textAlign: "center",
+              fontWeight: "bold",
+              fontSize: "45px",
+            }}
+            placeholder="Pokedéx"
+            value={textValue}
+            onKeyUp={handleSearch}
+            onChange={setValue}
+            marginRight="0px"
+          />
+        </Box>
+      )}
+    </Box>
+  );
+}
+export default Search;

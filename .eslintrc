@@ -1,0 +1,51 @@
+{
+    "extends": [
+      "plugin:react/recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:jest/recommended",
+      "plugin:prettier/recommended",
+      "plugin:react-hooks/recommended",
+      "prettier"
+    ],
+    "plugins": ["prettier", "@typescript-eslint", "@emotion/eslint-plugin"],
+    "rules": {
+      "prettier/prettier": "error",
+      "indent": "off",
+      "react/prop-types": "off",
+      "@typescript-eslint/indent": "off",
+      "@typescript-eslint/no-use-before-define": 1,
+      "@typescript-eslint/no-non-null-assertion": 1,
+      "@typescript-eslint/explicit-member-accessibility": [
+        "warn",
+        {
+          "accessibility": "no-public"
+        }
+      ],
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/no-var-requires": 1,
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-empty-interface": [
+        "warn",
+        {
+          "allowSingleExtends": false
+        }
+      ]
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "env": {
+      "browser": true,
+      "jest": true
+    },
+    "parser": "@typescript-eslint/parser"
+  }
+  
