@@ -1,17 +1,9 @@
 import React from "react";
 import "../pokemonTypes.css";
 import { Image, Box, Flex, Text } from "@chakra-ui/react";
-import { pokemonType } from "./PokemonList";
+import { pokemon } from "./Types";
 
-type pokemon = {
-  pokemon: {
-    name: string;
-    image: string | undefined;
-    types: pokemonType[];
-  };
-};
-
-const Pokemon = (props: pokemon): React.ReactElement => (
+const Pokemon = (props: { pokemon: pokemon }): React.ReactElement => (
   <Flex
     w="350px"
     h="400px"

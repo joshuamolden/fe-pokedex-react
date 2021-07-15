@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../pokemonTypes.css";
-import { pokemonType } from "./PokemonList";
+import { pokemonDetails } from "./Types";
 import { Link, useParams, useLocation } from "react-router-dom";
 import {
   Box,
@@ -18,33 +18,6 @@ import {
 import axios from "axios";
 import { theme } from "../App";
 import { ArrowBackIcon } from "@chakra-ui/icons";
-
-type stats = {
-  hp: number;
-  attack: number;
-  defense: number;
-  speed: number;
-  "special-attack": number;
-  "special-defense": number;
-};
-
-type pokemonAbility = { name: string };
-
-type pokemonEggGroup = { name: string };
-
-type pokemonDetails = {
-  id: number;
-  name: string;
-  types: pokemonType[];
-  image: string | undefined;
-  stats: stats;
-  egg_groups: pokemonEggGroup[];
-  abilities: pokemonAbility[];
-  genus: string;
-  description: string;
-  height: number;
-  weight: number;
-};
 
 // max stat value for each stat
 const maxStat = 255;
@@ -90,7 +63,6 @@ function PokemonDetails(): React.ReactElement {
   // need to keep track of the type as a string because of how Chakra's colorScheme works
   const [type, setType] = useState<string>("");
 
-  // stores information about the state of the page we just came from
   const { state } = useLocation();
 
   // api call used to retrieve specific pokemon data

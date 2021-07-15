@@ -1,12 +1,7 @@
 import React from "react";
 import { IconButton, Container } from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-
-type fromParent = {
-  direction: string | null;
-  displayButton: string | null | undefined;
-  onClick: any;
-};
+import { fromParent } from "./Types";
 
 function PageButton(props: fromParent): React.ReactElement {
   return (

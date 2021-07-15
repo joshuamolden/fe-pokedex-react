@@ -4,20 +4,9 @@ import Pokemon from "./Pokemon";
 import Header from "./Header";
 import Search from "./Search";
 import PageButton from "./PageButton";
-// import "../pokemonList.css";
+import { url, pokemon } from "./Types";
 import axios from "axios";
 import { Box, Flex, Heading } from "@chakra-ui/layout";
-
-type url = { prev: string | null; next: string | null };
-
-export type pokemonType = { name: string };
-
-type pokemon = {
-  id: number;
-  name: string;
-  image: string;
-  types: pokemonType[];
-};
 
 function createLinks(
   searchValue: string,
