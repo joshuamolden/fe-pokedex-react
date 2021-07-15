@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Box } from "@chakra-ui/layout";
+import { Box, Flex } from "@chakra-ui/layout";
 import React from "react";
 import { CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/button";
@@ -54,20 +54,23 @@ function Search(props: any): React.ReactElement {
 
   // search bar allows user to input string to search pokemon by
   return (
-    <Box
+    <Flex
       borderRadius="30px"
       bgColor="background.900"
       display="flex"
+      justify="center"
       alignItems="center"
       flex="2"
     >
       {displayClear ? (
-        <Box display="flex" alignItems="center" gap="5%" w="500px">
-          <Search2Icon
-            color="background.200"
-            fontSize="20px"
-            ml="20px"
-          ></Search2Icon>
+        <Flex
+          display="flex"
+          alignItems="center"
+          gap="5%"
+          w="90%"
+          justify="space-between"
+        >
+          <Search2Icon color="background.200" fontSize="20px"></Search2Icon>
           <Input
             bgColog="background.500"
             color="white"
@@ -76,6 +79,9 @@ function Search(props: any): React.ReactElement {
             fontSize="50px"
             outline="rgb(91, 169, 159)"
             border="none"
+            placeholder="Pokedéx"
+            paddingRight="0px !important"
+            paddingLeft="0px !important"
             _focus={{ border: "none" }}
             _placeholder={{
               color: "rgb(69, 136, 128)",
@@ -83,7 +89,6 @@ function Search(props: any): React.ReactElement {
               fontWeight: "bold",
               fontSize: "45px",
             }}
-            placeholder="Pokedéx"
             value={textValue}
             onKeyUp={handleSearch}
             onChange={setValue}
@@ -93,8 +98,6 @@ function Search(props: any): React.ReactElement {
             aria-label="Clear"
             icon={<CloseIcon fontSize="15x" />}
             display="flex"
-            mr="20px"
-            ml="20px"
             justifyContent="center"
             alignItems="center"
             bgColor="background.200"
@@ -106,10 +109,10 @@ function Search(props: any): React.ReactElement {
           >
             X
           </IconButton>
-        </Box>
+        </Flex>
       ) : (
-        <Box display="flex" alignItems="center" gap="5%">
-          <Search2Icon color="#cee4e1" fontSize="20px" ml="20px"></Search2Icon>
+        <Flex display="flex" alignItems="center" gap="5%" w="90%">
+          <Search2Icon color="#cee4e1" fontSize="20px"></Search2Icon>
           <Input
             bgColog="background.500"
             color="white"
@@ -130,9 +133,9 @@ function Search(props: any): React.ReactElement {
             onChange={setValue}
             marginRight="0px"
           />
-        </Box>
+        </Flex>
       )}
-    </Box>
+    </Flex>
   );
 }
 export default Search;
