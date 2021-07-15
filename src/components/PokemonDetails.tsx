@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../pokemonTypes.css";
+import { pokemonType } from "./PokemonList";
 import { Link, useParams, useLocation } from "react-router-dom";
 import {
   Box,
@@ -17,6 +18,33 @@ import {
 import axios from "axios";
 import { theme } from "../App";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+
+type stats = {
+  hp: number;
+  attack: number;
+  defense: number;
+  speed: number;
+  "special-attack": number;
+  "special-defense": number;
+};
+
+type pokemonAbility = { name: string };
+
+type pokemonEggGroup = { name: string };
+
+type pokemonDetails = {
+  id: number;
+  name: string;
+  types: pokemonType[];
+  image: string | undefined;
+  stats: stats;
+  egg_groups: pokemonEggGroup[];
+  abilities: pokemonAbility[];
+  genus: string;
+  description: string;
+  height: number;
+  weight: number;
+};
 
 // max stat value for each stat
 const maxStat = 255;
@@ -36,13 +64,14 @@ const addComma = (array: string[]) => {
   return returnArray;
 };
 
-const adjustStat = (value: string) => {
-  return (Number(value) / maxStat) * 100;
+const adjustStat = (value: number | undefined): number => {
+  if (value) return (value / maxStat) * 100;
+  else return 0;
 };
 
 function PokemonDetails(): React.ReactElement {
   // used to store information returned from api call made for a specific pokemon
-  const [pokemonDetails, setPokemonDetails] = useState<Record<string, any>>();
+  const [pokemonDetails, setPokemonDetails] = useState<pokemonDetails>();
 
   // this will grab the id in the url. Linked to first <Route> element in Pokedex.js
   const { pokemon_id } = useParams();

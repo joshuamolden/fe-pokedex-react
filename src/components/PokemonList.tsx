@@ -10,9 +10,14 @@ import { Box, Flex, Heading } from "@chakra-ui/layout";
 
 type url = { prev: string | null; next: string | null };
 
-type type = { name: string };
+export type pokemonType = { name: string };
 
-type pokemon = { id: number; name: string; image: string; types: type[] };
+type pokemon = {
+  id: number;
+  name: string;
+  image: string;
+  types: pokemonType[];
+};
 
 function createLinks(
   searchValue: string,
@@ -154,7 +159,6 @@ function ListPokemon(): React.ReactElement {
         <Box w="90%" mt="50px" mb="50px">
           <Header>
             <PageButton
-              flex="1"
               direction={"left"}
               displayButton={links?.prev}
               onClick={() => {
@@ -162,7 +166,6 @@ function ListPokemon(): React.ReactElement {
               }}
             />
             <Search
-              flex="2"
               onSearch={(search: string) => {
                 apiCall(search, 0);
               }}
@@ -171,7 +174,6 @@ function ListPokemon(): React.ReactElement {
               }}
             />
             <PageButton
-              flex="1"
               direction={"right"}
               displayButton={links?.next}
               onClick={() => {
@@ -214,7 +216,7 @@ function ListPokemon(): React.ReactElement {
             <PageButton
               direction={"left"}
               displayButton={links?.prev}
-              onAction={() => {
+              onClick={() => {
                 handlePageChange(true, links?.prev);
               }}
             />
@@ -229,7 +231,7 @@ function ListPokemon(): React.ReactElement {
             <PageButton
               direction={"right"}
               displayButton={links?.next}
-              onAction={() => {
+              onClick={() => {
                 handlePageChange(false, links?.next);
               }}
             />

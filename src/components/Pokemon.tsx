@@ -1,8 +1,17 @@
 import React from "react";
 import "../pokemonTypes.css";
 import { Image, Box, Flex, Text } from "@chakra-ui/react";
+import { pokemonType } from "./PokemonList";
 
-const Pokemon = (props: any): React.ReactElement => (
+type pokemon = {
+  pokemon: {
+    name: string;
+    image: string | undefined;
+    types: pokemonType[];
+  };
+};
+
+const Pokemon = (props: pokemon): React.ReactElement => (
   <Flex
     w="350px"
     h="400px"
@@ -30,7 +39,7 @@ const Pokemon = (props: any): React.ReactElement => (
       m="auto"
     />
     <Flex flexDir="row" justifyContent="flex-end" m="5px" mr="10px" p="10px">
-      {props.pokemon.types?.map((type: any) => (
+      {props.pokemon.types?.map((type) => (
         <Flex
           display="flex"
           fontSize="15px"
@@ -41,8 +50,8 @@ const Pokemon = (props: any): React.ReactElement => (
           paddingRight="7px"
           paddingTop="2px"
           paddingBottom="2px"
-          className={type}
-          key={type}
+          className={type.toString()}
+          key={type.toString()}
         >
           {String(type).toUpperCase()}
         </Flex>

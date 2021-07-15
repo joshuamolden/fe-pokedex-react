@@ -6,6 +6,7 @@ import { CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function Search(props: any): React.ReactElement {
   // keeps track of the value of the search input
   const [textValue, setTextValue] = useState("");
@@ -58,6 +59,7 @@ function Search(props: any): React.ReactElement {
       bgColor="background.900"
       display="flex"
       alignItems="center"
+      flex="2"
     >
       {displayClear ? (
         <Box display="flex" alignItems="center" gap="5%" w="500px">
