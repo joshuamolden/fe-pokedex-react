@@ -86,7 +86,7 @@ export const theme = extendTheme({
   },
 });
 
-export function App(): React.ReactElement {
+export default function App(): React.ReactElement {
   return (
     <ChakraProvider theme={theme}>
       <BrowserRouter>
