@@ -80,7 +80,7 @@ function ListPokemon(): React.ReactElement {
         .get(
           `http://localhost:8080/api/v1/pokemon/?name=${search_value}&page=${page_number}`
         )
-        .then(function (response) {
+        .then(function (response: any) {
           setPokemonList(response.data.content);
           const array = createLinks(
             search_value,
