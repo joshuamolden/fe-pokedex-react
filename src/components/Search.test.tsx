@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import Search from "./Search";
-import { render, fireEvent, cleanup } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
