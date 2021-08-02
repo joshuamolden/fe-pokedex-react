@@ -10,6 +10,7 @@ function PageButton(props: fromParent): React.ReactElement {
       justifyContent="center"
       alignItems="center"
       flex="1"
+      title={"div"}
     >
       {props.displayButton ? (
         props.direction === "left" ? (
@@ -23,6 +24,7 @@ function PageButton(props: fromParent): React.ReactElement {
             w="50px"
             color="white"
             _focus={{ border: "none" }}
+            title={"left"}
           />
         ) : (
           <IconButton
@@ -35,6 +37,7 @@ function PageButton(props: fromParent): React.ReactElement {
             w="50px"
             color="white"
             _focus={{ border: "none" }}
+            title={"right"}
           />
         )
       ) : (

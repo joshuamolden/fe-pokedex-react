@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Box, Flex } from "@chakra-ui/layout";
+import { Flex } from "@chakra-ui/layout";
 import React from "react";
 import { CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/button";
@@ -61,6 +61,7 @@ function Search(props: any): React.ReactElement {
       justify="center"
       alignItems="center"
       flex="2"
+      title="container"
     >
       {displayClear ? (
         <Flex
@@ -69,22 +70,22 @@ function Search(props: any): React.ReactElement {
           gap="5%"
           w="90%"
           justify="space-between"
+          title="searchWithClearButton"
         >
           <Search2Icon color="background.200" fontSize="20px"></Search2Icon>
           <Input
-            bgColog="background.500"
+            bgColor="background.900"
             color="white"
             maxH="100px"
             w="75%"
             fontSize="50px"
-            outline="rgb(91, 169, 159)"
             border="none"
             placeholder="Pokedéx"
             paddingRight="0px !important"
             paddingLeft="0px !important"
             _focus={{ border: "none" }}
             _placeholder={{
-              color: "rgb(69, 136, 128)",
+              color: "background.500",
               textAlign: "center",
               fontWeight: "bold",
               fontSize: "45px",
@@ -93,6 +94,7 @@ function Search(props: any): React.ReactElement {
             onKeyUp={handleSearch}
             onChange={setValue}
             marginRight="0px"
+            title="input"
           />
           <IconButton
             aria-label="Clear"
@@ -106,24 +108,35 @@ function Search(props: any): React.ReactElement {
             id="clearButton"
             type="reset"
             onClick={handleClearSearch}
+            title="clearButton"
           >
             X
           </IconButton>
         </Flex>
       ) : (
-        <Flex display="flex" alignItems="center" gap="5%" w="90%">
+        <Flex
+          display="flex"
+          alignItems="center"
+          gap="5%"
+          w="90%"
+          justify="flex-start"
+          title="searchWithoutClearButton"
+        >
           <Search2Icon color="#cee4e1" fontSize="20px"></Search2Icon>
           <Input
-            bgColog="background.500"
+            bgColor="background.900"
+            display="flex"
             color="white"
+            ml="18px"
             maxH="100px"
             w="75%"
             fontSize="50px"
             border="none"
             _focus={{ border: "none" }}
             _placeholder={{
-              color: "rgb(69, 136, 128)",
+              color: "background.500",
               textAlign: "center",
+              paddingLeft: "50px",
               fontWeight: "bold",
               fontSize: "45px",
             }}
@@ -132,6 +145,7 @@ function Search(props: any): React.ReactElement {
             onKeyUp={handleSearch}
             onChange={setValue}
             marginRight="0px"
+            title="input"
           />
         </Flex>
       )}

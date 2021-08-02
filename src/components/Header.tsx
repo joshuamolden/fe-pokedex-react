@@ -9,6 +9,7 @@ const Header = (props: any): React.ReactElement => (
     display="flex"
     justifyContent="space-around"
     h="90px"
+    title="header"
   >
     {props.children}
   </Heading>
