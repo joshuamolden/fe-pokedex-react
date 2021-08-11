@@ -2,6 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/pokedex/login",
   "lint-staged": {
     "*.{ts,tsx,js}": [
       "yarn lint:fix"
@@ -9,6 +10,7 @@
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.14",
+    "@chakra-ui/layout": "^1.4.7",
     "@chakra-ui/react": "^1.6.5",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",

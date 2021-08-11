@@ -18,7 +18,6 @@ import {
 import axios from "axios";
 import { theme } from "../App";
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { State } from "history";
 
 // max stat value for each stat
 const maxStat = 255;
@@ -99,7 +98,7 @@ function PokemonDetails(): React.ReactElement {
         <Flex flex="1" justifyContent="flex-end" mt="75px" mb="50px">
           <Flex flex="1" justifyContent="center" alignItems="center">
             <Link
-              to={`/?search=${
+              to={`/pokedex?search=${
                 (state as { searchValue: string })?.searchValue
               }&page=${(state as { currentPage: number })?.currentPage}`}
             >
