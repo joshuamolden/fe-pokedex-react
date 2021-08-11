@@ -10,10 +10,10 @@ import { Input } from "@chakra-ui/input";
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function Search(props: any): React.ReactElement {
   // keeps track of the value of the search input
-  const [textValue, setTextValue] = useState("");
+  const [textValue, setTextValue] = useState<string>("");
 
   // used to display clear button once a search value is submitted
-  const [displayClear, setDisplayClear] = useState(false);
+  const [displayClear, setDisplayClear] = useState<boolean>(false);
 
   // grabs query string from url
   const { search } = useLocation();

@@ -51,20 +51,20 @@ function ListPokemon(): React.ReactElement {
   const push = useNavigate();
 
   // used to return the list of pokemon displayed on each page. 15 pokemon per page
-  const [pokemonList, setPokemonList] = useState([]);
+  const [pokemonList, setPokemonList] = useState<pokemon[]>([]);
 
   // used to keep track of links in order to take care of paging through results
   const [links, setLinks] = useState<url>();
 
   // stores the current page number. Needs to be track separately in order to work properly
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState<number>(0);
 
   // keeps track of the last page of results. Initially set to 37 because the first set of results has 37 pages
   // this needs to be track separately in order for functionality to work properly
-  const [lastPage, setLastPage] = useState(36);
+  const [lastPage, setLastPage] = useState<number>(36);
 
   // used for searching based on string inputed by user
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState<string>("");
 
   // returns information concerning search and page in url
   const { search } = useLocation();
