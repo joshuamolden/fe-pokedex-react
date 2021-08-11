@@ -4,7 +4,7 @@ import PokemonDetails from "./PokemonDetails";
 import PokemonList from "./PokemonList";
 import Login from "./Login/Login";
 import Register from "./Login/Register";
-import CapturedPokemon from "./Login/CapturedPokemon";
+import CapturedPokemon from "./CapturedPokemon";
 
 const Pokedex = (): React.ReactElement => (
   <Routes>

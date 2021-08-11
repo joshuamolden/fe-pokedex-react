@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Pokemon from "../Pokemon";
-import Header from "../Header";
-import Search from "../Search";
-import PageButton from "../PageButton";
-import { url, pokemon } from "../Types";
+import Pokemon from "./Pokemon";
+import Header from "./Header";
+import Search from "./Search";
+import PageButton from "./PageButton";
+import { url, pokemon } from "./Types";
 import axios from "axios";
 import { Box, Flex, Heading } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
