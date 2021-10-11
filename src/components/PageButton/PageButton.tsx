@@ -1,7 +1,7 @@
 import React from "react";
 import { IconButton, Container } from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import { fromParent } from "./Types";
+import { fromParent } from "../Types";
 
 function PageButton(props: fromParent): React.ReactElement {
   return (

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import Search from "./Search";
+import Search from "../Search/Search";
 import { render, cleanup } from "@testing-library/react";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";

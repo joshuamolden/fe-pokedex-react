@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import PageButton from "./PageButton";
+import PageButton from "../PageButton/PageButton";
 import { render } from "@testing-library/react";
 import React from "react";
 import userEvent from "@testing-library/user-event";

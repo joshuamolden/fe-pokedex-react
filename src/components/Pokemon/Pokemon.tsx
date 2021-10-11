@@ -1,7 +1,7 @@
 import React from "react";
-import "../pokemonTypes.css";
+import "../../pokemonTypes.css";
 import { Image, Box, Flex, Text } from "@chakra-ui/react";
-import { pokemon } from "./Types";
+import { pokemon } from "../Types";
 
 const Pokemon = (props: { pokemon: pokemon }): React.ReactElement => (
   <Flex
@@ -11,6 +11,7 @@ const Pokemon = (props: { pokemon: pokemon }): React.ReactElement => (
     m="0 auto"
     borderRadius=".2em"
     bgColor="white"
+    title="container"
   >
     <Text
       color="black"
@@ -18,10 +19,11 @@ const Pokemon = (props: { pokemon: pokemon }): React.ReactElement => (
       m="20px"
       fontSize="20px"
       fontWeight="bold"
+      title="name"
     >
       {props.pokemon.name}
     </Text>
-    <Box as="hr" h="1px" color="#bababa"></Box>
+    <Box as="hr" h="1px" color="#bababa" title="hr"></Box>
     <Image
       src={props.pokemon.image}
       alt={props.pokemon.name}
@@ -29,8 +31,16 @@ const Pokemon = (props: { pokemon: pokemon }): React.ReactElement => (
       w="250px"
       h="250px"
       m="auto"
+      title="image"
     />
-    <Flex flexDir="row" justifyContent="flex-end" m="5px" mr="10px" p="10px">
+    <Flex
+      flexDir="row"
+      justifyContent="flex-end"
+      m="5px"
+      mr="10px"
+      p="10px"
+      title="types"
+    >
       {props.pokemon.types?.map((type) => (
         <Flex
           display="flex"
@@ -42,10 +52,10 @@ const Pokemon = (props: { pokemon: pokemon }): React.ReactElement => (
           paddingRight="7px"
           paddingTop="2px"
           paddingBottom="2px"
-          className={type.toString()}
-          key={type.toString()}
+          className={type.name.toString()}
+          key={type.name.toString()}
         >
-          {String(type).toUpperCase()}
+          {String(type.name).toUpperCase()}
         </Flex>
       ))}
     </Flex>

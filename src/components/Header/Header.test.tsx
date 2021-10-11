@@ -1,4 +1,4 @@
-import Header from "./Header";
+import Header from "../Header/Header";
 import { render } from "@testing-library/react";
 import React from "react";
 
