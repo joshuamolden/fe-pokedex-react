@@ -26,31 +26,34 @@ function Login(): React.ReactElement {
 
   const handleShowClick = () => setShowPassword(!showPassword);
 
-  const apiCall = useCallback((email: string, password: string) => {
-    axios
-      .post(`http://localhost:8080/api/v1/trainer/login`, {
-        email: email,
-        password: password,
-      })
-      .then(function (response) {
-        window.localStorage.setItem("jwt", response.data.jwt);
-        toast({
-          title: `Welcom ${response.data.name}`,
-          status: "success",
-          isClosable: true,
-          duration: 5000,
+  const apiCall = useCallback(
+    (email: string, password: string) => {
+      axios
+        .post(`http://localhost:8080/api/v1/trainer/login`, {
+          email: email,
+          password: password,
+        })
+        .then((response) => {
+          window.localStorage.setItem("jwt", response.data.jwt);
+          toast({
+            title: `Welcom ${response.data.name}`,
+            status: "success",
+            isClosable: true,
+            duration: 5000,
+          });
+          navigate("/pokedex/trainer?name=&page=0");
+        })
+        .catch((error) => {
+          toast({
+            title: error.response.data.message,
+            status: "error",
+            isClosable: true,
+            duration: 5000,
+          });
         });
-        navigate("/pokedex/trainer?name=&page=0");
-      })
-      .catch(function (error) {
-        toast({
-          title: error.response.data.message,
-          status: "error",
-          isClosable: true,
-          duration: 5000,
-        });
-      });
-  }, []);
+    },
+    [navigate, toast]
+  );
 
   return (
     <Flex

@@ -48,7 +48,7 @@ function Register(): React.ReactElement {
           });
         });
     },
-    []
+    [navigate, toast]
   );
 
   return (

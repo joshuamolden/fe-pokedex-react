@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import "../pokemonTypes.css";
-import { pokemonDetails } from "./Types";
 import { Link, useParams, useLocation } from "react-router-dom";
 import {
   Box,
@@ -11,6 +10,7 @@ import {
   Image,
   Progress,
   Table,
+  Tbody,
   Td,
   Text,
   Tr,
@@ -19,13 +19,14 @@ import axios from "axios";
 import { theme } from "../App";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 
-// max stat value for each stat
-const maxStat = 255;
+const MAX_STAT_VALUE = 255;
+type CommaSeparated = {
+  eggGroups: string[];
+  abilities: string[];
+};
 
-// adds commas to egg groups and abilities returned by api data
 const addComma = (array: string[]) => {
   const returnArray = [];
-  // for loop adds commas to egg group strings if there are multiple egg groups
   for (let i = 0; i < array.length; i++) {
     // makes sure comma isn't added to the last one
     if (array.length - i === 1) {
@@ -38,24 +39,21 @@ const addComma = (array: string[]) => {
 };
 
 const adjustStat = (value: number | undefined): number => {
-  if (value) return (value / maxStat) * 100;
+  if (value) return (value / MAX_STAT_VALUE) * 100;
   else return 0;
 };
 
-function PokemonDetails(): React.ReactElement {
-  // used to store information returned from api call made for a specific pokemon
-  const [pokemonDetails, setPokemonDetails] = useState<pokemonDetails>();
-
+function PokemonDetails(): ReactElement {
   // this will grab the id in the url. Linked to first <Route> element in Pokedex.js
   const { pokemon_id } = useParams();
 
+  const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails>();
   const [types, setTypes] = useState<string[]>([]);
-
-  // used to display commas after Egg Groups if there are multiple
-  const [modEggGroups, setModEggGroups] = useState<string[]>([]);
-
-  // used to display commas after Abilities if there are multiple
-  const [modAbilities, setModAbilities] = useState<string[]>([]);
+  const [commaSeparatedAttributes, setCommaSeparatedAttributes] =
+    useState<CommaSeparated>({
+      eggGroups: [],
+      abilities: [],
+    });
 
   // keeps track of color for different elements of DOM
   const [color, setColor] = useState<Record<number, string>>();
@@ -65,7 +63,6 @@ function PokemonDetails(): React.ReactElement {
 
   const { state } = useLocation();
 
-  // api call used to retrieve specific pokemon data
   useEffect(() => {
     if (pokemon_id) {
       axios
@@ -76,16 +73,17 @@ function PokemonDetails(): React.ReactElement {
             (theme.colors as unknown as Record<string, Record<number, string>>)[
               response.data.types[0]
             ]
-          ); // state vaiable set to correct colors
+          );
           setType(response.data.types[0]);
           setTypes(response.data.types);
-          setModEggGroups(addComma(response.data.egg_groups));
-          setModAbilities(addComma(response.data.abilities));
+          setCommaSeparatedAttributes({
+            eggGroups: addComma(response.data.egg_groups),
+            abilities: addComma(response.data.abilities),
+          });
         });
     }
   }, [pokemon_id]);
 
-  // displays details about a specific pokemon
   return (
     <Container
       bgColor={color?.[500]}
@@ -186,114 +184,120 @@ function PokemonDetails(): React.ReactElement {
             size="sm"
             variant="unstyled"
           >
-            <Tr>
-              <Td paddingTop="4px" paddingBottom="4px">
-                HP
-              </Td>
-              <Td paddingTop="4px" paddingBottom="4px">
-                <Progress
-                  w={maxStat}
-                  colorScheme={type}
-                  bg={color?.[200]}
-                  h="25px"
-                  borderRadius="6px"
-                  value={adjustStat(pokemonDetails?.stats?.hp)}
-                />
-              </Td>
-              <Td paddingTop="4px" paddingBottom="4px">
-                {pokemonDetails?.stats?.hp}
-              </Td>
-            </Tr>
-            <Tr>
-              <Td paddingTop="4px" paddingBottom="4px">
-                Attack
-              </Td>
-              <Td paddingTop="4px" paddingBottom="4px">
-                <Progress
-                  w={maxStat}
-                  colorScheme={type}
-                  bg={color?.[200]}
-                  h="25px"
-                  borderRadius="6px"
-                  value={adjustStat(pokemonDetails?.stats?.attack)}
-                />
-              </Td>
-              <Td paddingTop="4px" paddingBottom="4px">
-                {pokemonDetails?.stats?.attack}
-              </Td>
-            </Tr>
-            <Tr>
-              <Td paddingTop="4px" paddingBottom="4px">
-                Defense
-              </Td>
-              <Td paddingTop="4px" paddingBottom="4px">
-                <Progress
-                  w={maxStat}
-                  colorScheme={type}
-                  bg={color?.[200]}
-                  h="25px"
-                  borderRadius="6px"
-                  value={adjustStat(pokemonDetails?.stats?.defense)}
-                />
-              </Td>
-              <Td paddingTop="4px" paddingBottom="4px">
-                {pokemonDetails?.stats?.defense}
-              </Td>
-            </Tr>
-            <Tr>
-              <Td paddingTop="4px" paddingBottom="4px">
-                Speed
-              </Td>
-              <Td paddingTop="4px" paddingBottom="4px">
-                <Progress
-                  w={maxStat}
-                  colorScheme={type}
-                  bg={color?.[200]}
-                  h="25px"
-                  borderRadius="6px"
-                  value={adjustStat(pokemonDetails?.stats?.speed)}
-                />
-              </Td>
-              <Td paddingTop="4px" paddingBottom="4px">
-                {pokemonDetails?.stats?.speed}
-              </Td>
-            </Tr>
-            <Tr>
-              <Td paddingTop="4px" paddingBottom="4px">
-                Sp Atk
-              </Td>
-              <Td paddingTop="4px" paddingBottom="4px">
-                <Progress
-                  w={maxStat}
-                  colorScheme={type}
-                  bg={color?.[200]}
-                  h="25px"
-                  borderRadius="6px"
-                  value={adjustStat(pokemonDetails?.stats?.["special-attack"])}
-                />
-              </Td>
-              <Td paddingTop="4px" paddingBottom="4px">
-                {pokemonDetails?.stats?.["special-attack"]}
-              </Td>
-            </Tr>
-            <Tr>
-              <Td paddingTop="4px" paddingBottom="4px">
-                Sp Def
-              </Td>
-              <Td paddingTop="4px" paddingBottom="4px">
-                <Progress
-                  w={maxStat}
-                  colorScheme={type}
-                  bg={color?.[200]}
-                  h="25px"
-                  borderRadius="6px"
-                  value={adjustStat(pokemonDetails?.stats?.["special-defense"])}
-                />
-              </Td>
-              <Td paddingTop="4px" paddingBottom="4px">
-                {pokemonDetails?.stats?.["special-defense"]}
-              </Td>
-            </Tr>
+            <Tbody>
+              <Tr>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  HP
+                </Td>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  <Progress
+                    w={MAX_STAT_VALUE}
+                    colorScheme={type}
+                    bg={color?.[200]}
+                    h="25px"
+                    borderRadius="6px"
+                    value={adjustStat(pokemonDetails?.stats?.hp)}
+                  />
+                </Td>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  {pokemonDetails?.stats?.hp}
+                </Td>
+              </Tr>
+              <Tr>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  Attack
+                </Td>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  <Progress
+                    w={MAX_STAT_VALUE}
+                    colorScheme={type}
+                    bg={color?.[200]}
+                    h="25px"
+                    borderRadius="6px"
+                    value={adjustStat(pokemonDetails?.stats?.attack)}
+                  />
+                </Td>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  {pokemonDetails?.stats?.attack}
+                </Td>
+              </Tr>
+              <Tr>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  Defense
+                </Td>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  <Progress
+                    w={MAX_STAT_VALUE}
+                    colorScheme={type}
+                    bg={color?.[200]}
+                    h="25px"
+                    borderRadius="6px"
+                    value={adjustStat(pokemonDetails?.stats?.defense)}
+                  />
+                </Td>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  {pokemonDetails?.stats?.defense}
+                </Td>
+              </Tr>
+              <Tr>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  Speed
+                </Td>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  <Progress
+                    w={MAX_STAT_VALUE}
+                    colorScheme={type}
+                    bg={color?.[200]}
+                    h="25px"
+                    borderRadius="6px"
+                    value={adjustStat(pokemonDetails?.stats?.speed)}
+                  />
+                </Td>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  {pokemonDetails?.stats?.speed}
+                </Td>
+              </Tr>
+              <Tr>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  Sp Atk
+                </Td>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  <Progress
+                    w={MAX_STAT_VALUE}
+                    colorScheme={type}
+                    bg={color?.[200]}
+                    h="25px"
+                    borderRadius="6px"
+                    value={adjustStat(
+                      pokemonDetails?.stats?.["special-attack"]
+                    )}
+                  />
+                </Td>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  {pokemonDetails?.stats?.["special-attack"]}
+                </Td>
+              </Tr>
+              <Tr>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  Sp Def
+                </Td>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  <Progress
+                    w={MAX_STAT_VALUE}
+                    colorScheme={type}
+                    bg={color?.[200]}
+                    h="25px"
+                    borderRadius="6px"
+                    value={adjustStat(
+                      pokemonDetails?.stats?.["special-defense"]
+                    )}
+                  />
+                </Td>
+                <Td paddingTop="4px" paddingBottom="4px">
+                  {pokemonDetails?.stats?.["special-defense"]}
+                </Td>
+              </Tr>
+            </Tbody>
           </Table>
         </Flex>
         <Box w="85%" margin="auto">
@@ -327,78 +331,82 @@ function PokemonDetails(): React.ReactElement {
             gridGap="20px"
             flexDir="column"
           >
-            <Tr display="flex">
-              <Td
-                fontSize="17px"
-                justifyContent="left"
-                flex="1"
-                fontWeight="bold"
-              >
-                Height:
-              </Td>
-              <Td
-                fontSize="17px"
-                justifyContent="left"
-                flex="1"
-                fontWeight="normal"
-              >
-                {pokemonDetails?.height} m
-              </Td>
-              <Td
-                fontSize="17px"
-                justifyContent="left"
-                flex="1"
-                fontWeight="bold"
-              >
-                Weight:
-              </Td>
-              <Td
-                fontSize="17px"
-                justifyContent="left"
-                flex="1"
-                fontWeight="normal"
-              >
-                {pokemonDetails?.weight} kg
-              </Td>
-            </Tr>
-            <Tr display="flex">
-              <Td
-                fontSize="17px"
-                justifyContent="left"
-                flex="1"
-                fontWeight="bold"
-              >
-                Egg Groups:
-              </Td>
-              <Td
-                fontSize="17px"
-                justifyContent="left"
-                flex="1"
-                fontWeight="normal"
-              >
-                {modEggGroups.map((egg_group: string) => (
-                  <Flex key={egg_group}>{egg_group}</Flex>
-                ))}
-              </Td>
-              <Td
-                fontSize="17px"
-                justifyContent="left"
-                flex="1"
-                fontWeight="bold"
-              >
-                Abilities:
-              </Td>
-              <Td
-                fontSize="17px"
-                justifyContent="left"
-                flex="1"
-                fontWeight="normal"
-              >
-                {modAbilities.map((ability: string) => (
-                  <Flex key={ability}>{ability}</Flex>
-                ))}
-              </Td>
-            </Tr>
+            <Tbody>
+              <Tr display="flex">
+                <Td
+                  fontSize="17px"
+                  justifyContent="left"
+                  flex="1"
+                  fontWeight="bold"
+                >
+                  Height:
+                </Td>
+                <Td
+                  fontSize="17px"
+                  justifyContent="left"
+                  flex="1"
+                  fontWeight="normal"
+                >
+                  {pokemonDetails?.height} m
+                </Td>
+                <Td
+                  fontSize="17px"
+                  justifyContent="left"
+                  flex="1"
+                  fontWeight="bold"
+                >
+                  Weight:
+                </Td>
+                <Td
+                  fontSize="17px"
+                  justifyContent="left"
+                  flex="1"
+                  fontWeight="normal"
+                >
+                  {pokemonDetails?.weight} kg
+                </Td>
+              </Tr>
+              <Tr display="flex">
+                <Td
+                  fontSize="17px"
+                  justifyContent="left"
+                  flex="1"
+                  fontWeight="bold"
+                >
+                  Egg Groups:
+                </Td>
+                <Td
+                  fontSize="17px"
+                  justifyContent="left"
+                  flex="1"
+                  fontWeight="normal"
+                >
+                  {commaSeparatedAttributes.eggGroups.map(
+                    (egg_group: string) => (
+                      <Flex key={egg_group}>{egg_group}</Flex>
+                    )
+                  )}
+                </Td>
+                <Td
+                  fontSize="17px"
+                  justifyContent="left"
+                  flex="1"
+                  fontWeight="bold"
+                >
+                  Abilities:
+                </Td>
+                <Td
+                  fontSize="17px"
+                  justifyContent="left"
+                  flex="1"
+                  fontWeight="normal"
+                >
+                  {commaSeparatedAttributes.abilities.map((ability: string) => (
+                    <Flex key={ability}>{ability}</Flex>
+                  ))}
+                </Td>
+              </Tr>
+            </Tbody>
           </Table>
         </Box>
       </Box>

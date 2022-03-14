@@ -1,9 +1,12 @@
 import React from "react";
 import { IconButton, Container } from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import { fromParent } from "../Types";
 
-function PageButton(props: fromParent): React.ReactElement {
+const PageButton = ({
+  direction,
+  displayButton,
+  onClick,
+}: DisplayButton): React.ReactElement => {
   return (
     <Container
       display="flex"
@@ -12,10 +15,10 @@ function PageButton(props: fromParent): React.ReactElement {
       flex="1"
       title={"div"}
     >
-      {props.displayButton ? (
-        props.direction === "left" ? (
+      {displayButton ? (
+        direction === "left" ? (
           <IconButton
-            onClick={props.onClick}
+            onClick={onClick}
             aria-label="Back"
             icon={<ArrowBackIcon fontSize="30px" />}
             borderRadius="50%"
@@ -28,7 +31,7 @@ function PageButton(props: fromParent): React.ReactElement {
           />
         ) : (
           <IconButton
-            onClick={props.onClick}
+            onClick={onClick}
             aria-label="Forward"
             icon={<ArrowForwardIcon fontSize="30px" />}
             borderRadius="50%"
@@ -40,10 +43,8 @@ function PageButton(props: fromParent): React.ReactElement {
             title={"right"}
           />
         )
-      ) : (
-        <div />
-      )}
+      ) : null}
     </Container>
   );
-}
+};
 export default PageButton;

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, KeyboardEvent } from "react";
 import { useLocation } from "react-router-dom";
 import { Flex } from "@chakra-ui/layout";
 import React from "react";
@@ -7,12 +7,14 @@ import { CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function Search(props: any): React.ReactElement {
-  // keeps track of the value of the search input
-  const [textValue, setTextValue] = useState<string>("");
-
-  // used to display clear button once a search value is submitted
+function Search({
+  onSearch,
+  onClear,
+}: {
+  onSearch: (value: string) => void;
+  onClear: () => void;
+}): React.ReactElement {
+  const [inputText, setInputText] = useState<string>("");
   const [displayClear, setDisplayClear] = useState<boolean>(false);
 
   // grabs query string from url
@@ -23,37 +25,30 @@ function Search(props: any): React.ReactElement {
     const queryString = new URLSearchParams(search);
     const searchParam = queryString.get("search");
     if (searchParam) {
-      // will display clear button if refresh happens and there is a search criterion in url
       setDisplayClear(true);
     }
-    setTextValue(searchParam ?? "");
+    setInputText(searchParam ?? "");
   }, []);
 
-  // used to capture when a user presses enter to search for specific pokemon
-  const handleSearch = (e: any) => {
-    if (e.keyCode === 13) {
-      // 13 is the ascii value for the enter key
-      props.onSearch(e.target.value);
+  const handleSearch = (keyEvent: KeyboardEvent<HTMLInputElement>) => {
+    if (keyEvent.key === "Enter") {
+      onSearch(keyEvent.currentTarget.value);
       setDisplayClear(!displayClear);
     }
   };
 
-  // handles reset search box button
   const handleClearSearch = () => {
-    if (textValue) {
-      // checks if there is any search value to clear
-      setTextValue(""); // set search value to empty
-      setDisplayClear(!displayClear); // removes clear button from the display
-      props.onClear();
+    if (inputText) {
+      setInputText("");
+      setDisplayClear(!displayClear);
+      onClear();
     }
   };
 
-  // controls value of input tag and textValue
-  const setValue = (e: any) => {
-    setTextValue(e.target.value);
+  const setValue = (changeEvent: ChangeEvent<HTMLInputElement>) => {
+    setInputText(changeEvent.target.value);
   };
 
-  // search bar allows user to input string to search pokemon by
   return (
     <Flex
       borderRadius="30px"
@@ -92,7 +87,7 @@ function Search(props: any): React.ReactElement {
               fontWeight: "bold",
               fontSize: "45px",
             }}
-            value={textValue}
+            value={inputText}
             onKeyUp={handleSearch}
             onChange={setValue}
             marginRight="0px"
@@ -144,7 +139,7 @@ function Search(props: any): React.ReactElement {
               fontSize: "45px",
             }}
             placeholder="Pokedéx"
-            value={textValue}
+            value={inputText}
             onKeyUp={handleSearch}
             onChange={setValue}
             marginRight="0px"

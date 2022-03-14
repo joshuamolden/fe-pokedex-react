@@ -1,8 +1,8 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { Heading } from "@chakra-ui/layout";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const Header = (props: any): React.ReactElement => (
+const Header = (props?: { children?: ReactElement[] }): ReactElement => (
   <Heading
     as="h1"
     mb="50px"
@@ -11,7 +11,7 @@ const Header = (props: any): React.ReactElement => (
     h="90px"
     title="header"
   >
-    {props.children}
+    {props?.children}
   </Heading>
 );
 export default Header;

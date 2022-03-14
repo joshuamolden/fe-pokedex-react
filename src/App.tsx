@@ -95,6 +95,3 @@ export default function App(): React.ReactElement {
     </ChakraProvider>
   );
 }
-
-//<PageButton displayButton={true} direction={"left"} />
-//<PageButton displayButton={true} direction={"right"} />

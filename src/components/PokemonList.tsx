@@ -1,11 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Pokemon from "./Pokemon/Pokemon";
+import PokemonCard from "./PokemonCard/PokemonCard";
 import Header from "./Header/Header";
 import Search from "./Search/Search";
 import PageButton from "./PageButton/PageButton";
-import { url, pokemon } from "./Types";
 import axios from "axios";
 import { Box, Flex, Heading } from "@chakra-ui/layout";
 
@@ -13,7 +11,7 @@ function createLinks(
   searchValue: string,
   pageNumber: number,
   totalPages: number
-): url {
+): Url {
   if (pageNumber === 0 && totalPages === 1) {
     return {
       prev: null,
@@ -46,60 +44,54 @@ function createLinks(
   }
 }
 
-function ListPokemon(): React.ReactElement {
+function ListPokemon(): ReactElement {
   // used to update url when new search criterion is inputed or user pages through results
   const push = useNavigate();
 
-  // used to return the list of pokemon displayed on each page. 15 pokemon per page
-  const [pokemonList, setPokemonList] = useState<pokemon[]>([]);
-
-  // used to keep track of links in order to take care of paging through results
-  const [links, setLinks] = useState<url>();
-
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
+  const [links, setLinks] = useState<Url>();
   // stores the current page number. Needs to be track separately in order to work properly
   const [currentPage, setCurrentPage] = useState<number>(0);
 
-  // keeps track of the last page of results. Initially set to 37 because the first set of results has 37 pages
+  // Initially set to 36 because the first set of results has 36 pages
   // this needs to be track separately in order for functionality to work properly
   const [lastPage, setLastPage] = useState<number>(36);
-
-  // used for searching based on string inputed by user
   const [searchValue, setSearchValue] = useState<string>("");
 
   // returns information concerning search and page in url
   const { search } = useLocation();
 
-  // api call used to return pokemon based on a inputed search value and a page number.
-  // Updates after enter is pushed to capture user input in search bar or when paging through results
-  const apiCall = useCallback((search_value, page_number) => {
-    const queryString = new URLSearchParams(search); // breaks query information into key: value pairs
-    queryString.set("search", search_value); // sets search param to search_value
-    queryString.set("page", page_number); // sets page param to page_number
-    push(`/pokedex?${queryString.toString()}`); // updates url with new search_value and page_number
-    if (search_value || search_value === "") {
-      axios
-        .get(
-          `http://localhost:8080/api/v1/pokemon/?name=${search_value}&page=${page_number}`
-        )
-        .then(function (response: any) {
-          setPokemonList(response.data.content);
-          const array = createLinks(
-            search_value,
-            response.data.number,
-            response.data.totalPages
-          );
-          setLinks(array);
-          setCurrentPage(response.data.number);
-          setLastPage(response.data.totalPages - 1); // pages start from 0, so the last page is actually the (total pages - 1)
-        });
-    }
-  }, []);
+  const apiCall = useCallback(
+    (search_value, page_number) => {
+      const queryString = new URLSearchParams(search); // breaks query information into key: value pairs
+      queryString.set("search", search_value);
+      queryString.set("page", page_number);
+      push(`/pokedex?${queryString.toString()}`); // updates url with new search_value and page_number
+      if (search_value || search_value === "") {
+        axios
+          .get(
+            `http://localhost:8080/api/v1/pokemon/?name=${search_value}&page=${page_number}`
+          )
+          .then(function (response: any) {
+            setPokemonList(response.data.content);
+            const array = createLinks(
+              search_value,
+              response.data.number,
+              response.data.totalPages
+            );
+            setLinks(array);
+            setCurrentPage(response.data.number);
+            setLastPage(response.data.totalPages - 1); // pages start from 0, so the last page is actually the (total pages - 1)
+          });
+      }
+    },
+    [push, search]
+  );
 
-  // Makes initial api call and and new api call when user presses enter
   useEffect(() => {
     const queryString = new URLSearchParams(search); // breaks query information into key: value pairs
-    const searchParam = queryString.get("search"); // gets the search value from url
-    const pageParam = queryString.get("page"); // gets page value from url
+    const searchParam = queryString.get("search");
+    const pageParam = queryString.get("page");
     if (pageParam === null) {
       // allows for initial api call to be made correctly
       apiCall("", 0);
@@ -115,11 +107,10 @@ function ListPokemon(): React.ReactElement {
       setSearchValue(
         searchParam === null || searchParam === "undefined" ? "" : searchParam
       );
-      apiCall(searchParam, pageParam); // makes api call based on searchParam
+      apiCall(searchParam, pageParam);
     }
   }, [search]);
 
-  // takes care of paging through results
   const handlePageChange = (
     direction: boolean,
     link: string | null | undefined
@@ -127,25 +118,22 @@ function ListPokemon(): React.ReactElement {
     const pageNum = parseInt(String(link).split("=")[2]); // grabs page number from prev url link
     if (direction) {
       if (link) {
-        // make sure prev link is not null (takes care of page left)
         apiCall(searchValue, pageNum);
       } else {
-        console.log("No 'prev' link"); // at the beginning of the paginated results
+        console.log("No 'prev' link");
       }
     } else {
       if (link) {
-        // make sure next link is not null (takes care of page right)
         apiCall(searchValue, pageNum);
       } else {
-        console.log("No 'next' link"); // at the end of the paginated results
+        console.log("No 'next' link");
       }
     }
   };
 
-  // used to render the list of pokemon and the header when on Pokedex.js
   return (
     <Flex justify="center" bgColor="background.500" h="100%">
-      {pokemonList.length ? ( // displays results if any, or else notifies user there were not results based on search criterion or due to error
+      {pokemonList.length ? (
         <Box w="90%" mt="50px" mb="50px">
           <Header>
             <PageButton
@@ -178,13 +166,13 @@ function ListPokemon(): React.ReactElement {
             margin="auto"
             justify="center"
           >
-            {pokemonList?.map((pokemon: pokemon) => (
+            {pokemonList?.map((pokemon: Pokemon) => (
               <Link
                 to={`/v1/pokemon/${pokemon.id}${search}`}
                 key={pokemon.id}
                 state={{ searchValue, currentPage }}
               >
-                <Pokemon pokemon={pokemon} />
+                <PokemonCard pokemon={pokemon} />
               </Link>
             ))}
           </Flex>
