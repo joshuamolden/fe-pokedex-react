@@ -1,39 +1,35 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, ChangeEvent, KeyboardEvent } from "react";
-import { useLocation } from "react-router-dom";
+import {
+  useState,
+  useEffect,
+  ChangeEvent,
+  KeyboardEvent,
+  ReactElement,
+} from "react";
 import { Flex } from "@chakra-ui/layout";
 import React from "react";
 import { CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
+import { useSearch } from "../../contexts/SearchContext";
 
-function Search({
-  onSearch,
-  onClear,
-}: {
-  onSearch: (value: string) => void;
-  onClear: () => void;
-}): React.ReactElement {
+const Search = (): ReactElement => {
   const [inputText, setInputText] = useState<string>("");
   const [displayClear, setDisplayClear] = useState<boolean>(false);
 
-  // grabs query string from url
-  const { search } = useLocation();
+  const { searchValue, pageInfo, setSearchValue, setPageInfo } = useSearch();
 
-  // sets value of input to the current search criterion
   useEffect(() => {
-    const queryString = new URLSearchParams(search);
-    const searchParam = queryString.get("search");
-    if (searchParam) {
+    if (searchValue) {
       setDisplayClear(true);
     }
-    setInputText(searchParam ?? "");
-  }, []);
+    setInputText(searchValue ?? "");
+  }, [searchValue]);
 
   const handleSearch = (keyEvent: KeyboardEvent<HTMLInputElement>) => {
     if (keyEvent.key === "Enter") {
-      onSearch(keyEvent.currentTarget.value);
+      setSearchValue(keyEvent.currentTarget.value);
       setDisplayClear(!displayClear);
+      setPageInfo({ currentPage: 0, maxPageNumber: pageInfo.maxPageNumber });
     }
   };
 
@@ -41,11 +37,12 @@ function Search({
     if (inputText) {
       setInputText("");
       setDisplayClear(!displayClear);
-      onClear();
+      setSearchValue("");
+      setPageInfo({ currentPage: 0, maxPageNumber: pageInfo.maxPageNumber });
     }
   };
 
-  const setValue = (changeEvent: ChangeEvent<HTMLInputElement>) => {
+  const updateTextValue = (changeEvent: ChangeEvent<HTMLInputElement>) => {
     setInputText(changeEvent.target.value);
   };
 
@@ -89,7 +86,7 @@ function Search({
             }}
             value={inputText}
             onKeyUp={handleSearch}
-            onChange={setValue}
+            onChange={updateTextValue}
             marginRight="0px"
             title="input"
           />
@@ -141,7 +138,7 @@ function Search({
             placeholder="Pokedéx"
             value={inputText}
             onKeyUp={handleSearch}
-            onChange={setValue}
+            onChange={updateTextValue}
             marginRight="0px"
             title="input"
           />
@@ -149,5 +146,5 @@ function Search({
       )}
     </Flex>
   );
-}
+};
 export default Search;

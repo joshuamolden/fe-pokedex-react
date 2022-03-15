@@ -13,6 +13,8 @@ import { MdEmail } from "react-icons/md";
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_TRAINER_REGISTER_PATH } from "../../services/apiConstants";
+import { ROUTING_LOGIN_PATH } from "../../services/routingConstants";
 
 function Register(): React.ReactElement {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -27,7 +29,7 @@ function Register(): React.ReactElement {
   const register = useCallback(
     (name: string, email: string, password: string) => {
       axios
-        .post(`http://localhost:8080/api/v1/trainer/register`, {
+        .post(`${API_TRAINER_REGISTER_PATH}`, {
           name: name,
           email: email,
           password: password,
@@ -38,7 +40,7 @@ function Register(): React.ReactElement {
             description: "You are registered!",
             status: "success",
           });
-          navigate("/pokedex/login");
+          navigate(`${ROUTING_LOGIN_PATH}`);
         })
         .catch(function (error) {
           toast({

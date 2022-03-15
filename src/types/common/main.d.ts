@@ -3,7 +3,6 @@ type Url = { prev: string | null; next: string | null };
 type Pokemon = {
   id: number;
   name: string;
-  image?: string | undefined;
   types: string[];
 };
 
@@ -20,7 +19,6 @@ type PokemonDetails = {
   id: number;
   name: string;
   types: string[];
-  image?: string | undefined;
   stats: Pokemonstats;
   egg_groups: string[];
   abilities: string[];
@@ -33,7 +31,6 @@ type PokemonDetails = {
 type DisplayButton = {
   direction: string;
   displayButton: string | null | undefined;
-  onClick: () => void;
 };
 
 type Pageable = {
@@ -67,4 +64,9 @@ type PaginatedPokemonList = {
   numberOfElements: number;
   first: boolean;
   empty: boolean;
+};
+
+type CommaSeparated = {
+  eggGroups: string[];
+  abilities: string[];
 };

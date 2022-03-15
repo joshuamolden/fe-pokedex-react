@@ -15,6 +15,11 @@ import React, { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import PokemonLogo from "./pokemon.png";
+import {
+  ROUTING_REGISTER_PATH,
+  ROUTING_TRAINER_PATH,
+} from "../../services/routingConstants";
+import { API_TRAINER_LOGIN_PATH } from "../../services/apiConstants";
 
 function Login(): React.ReactElement {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -29,7 +34,7 @@ function Login(): React.ReactElement {
   const apiCall = useCallback(
     (email: string, password: string) => {
       axios
-        .post(`http://localhost:8080/api/v1/trainer/login`, {
+        .post(`${API_TRAINER_LOGIN_PATH}`, {
           email: email,
           password: password,
         })
@@ -41,7 +46,7 @@ function Login(): React.ReactElement {
             isClosable: true,
             duration: 5000,
           });
-          navigate("/pokedex/trainer?name=&page=0");
+          navigate(`${ROUTING_TRAINER_PATH}`);
         })
         .catch((error) => {
           toast({
@@ -135,7 +140,7 @@ function Login(): React.ReactElement {
       <Box>
         New to us?{" "}
         <Link
-          to={`/pokedex/register`}
+          to={`${ROUTING_REGISTER_PATH}`}
           style={{ color: "#2c508d", textDecoration: "underline" }}
         >
           Sign Up

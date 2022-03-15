@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { BASE_PATH, POKEMON_PATH } from "../services/constants";
+import { API_POKEMON_PATH } from "../services/apiConstants";
 import { pokemonListMock } from "../__fixtures__/pokemon";
 
 /* 
@@ -16,10 +16,7 @@ import { pokemonListMock } from "../__fixtures__/pokemon";
 
 export const handlers = [
   // GET list of pokemon (paginated)
-  rest.get(
-    `http://localhost:8080${BASE_PATH}${POKEMON_PATH}/`,
-    (request, response, context) => {
-      return response(context.status(200), context.json(pokemonListMock));
-    }
-  ),
+  rest.get(`${API_POKEMON_PATH}/`, (request, response, context) => {
+    return response(context.status(200), context.json(pokemonListMock));
+  }),
 ];

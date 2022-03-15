@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import "../pokemonTypes.css";
-import { Link, useParams, useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Box,
   Container,
@@ -15,36 +15,17 @@ import {
   Text,
   Tr,
 } from "@chakra-ui/react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { theme } from "../App";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import { ROUTING_BASE_PATH } from "../services/routingConstants";
+import { addComma, adjustStat } from "../utils/utils";
+import { API_POKEMON_PATH } from "../services/apiConstants";
 
 const MAX_STAT_VALUE = 255;
-type CommaSeparated = {
-  eggGroups: string[];
-  abilities: string[];
-};
-
-const addComma = (array: string[]) => {
-  const returnArray = [];
-  for (let i = 0; i < array.length; i++) {
-    // makes sure comma isn't added to the last one
-    if (array.length - i === 1) {
-      returnArray.push(array[i]);
-    } else {
-      returnArray.push(array[i] + ",");
-    }
-  }
-  return returnArray;
-};
-
-const adjustStat = (value: number | undefined): number => {
-  if (value) return (value / MAX_STAT_VALUE) * 100;
-  else return 0;
-};
 
 function PokemonDetails(): ReactElement {
-  // this will grab the id in the url. Linked to first <Route> element in Pokedex.js
+  // Grabs params in URL. Linked to first <Route> element in Pokedex.js
   const { pokemon_id } = useParams();
 
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails>();
@@ -61,13 +42,11 @@ function PokemonDetails(): ReactElement {
   // need to keep track of the type as a string because of how Chakra's colorScheme works
   const [type, setType] = useState<string>("");
 
-  const { state } = useLocation();
-
   useEffect(() => {
     if (pokemon_id) {
       axios
-        .get(`http://localhost:8080/api/v1/pokemon/${pokemon_id}`)
-        .then(function (response: any) {
+        .get(`${API_POKEMON_PATH}/${pokemon_id}`)
+        .then((response: AxiosResponse<PokemonDetails>) => {
           setPokemonDetails(response.data);
           setColor(
             (theme.colors as unknown as Record<string, Record<number, string>>)[
@@ -95,11 +74,7 @@ function PokemonDetails(): ReactElement {
       <Heading as="h1" display="flex" justifyContent="center" flexDir="row">
         <Flex flex="1" justifyContent="flex-end" mt="75px" mb="50px">
           <Flex flex="1" justifyContent="center" alignItems="center">
-            <Link
-              to={`/pokedex?search=${
-                (state as { searchValue: string })?.searchValue
-              }&page=${(state as { currentPage: number })?.currentPage}`}
-            >
+            <Link to={`${ROUTING_BASE_PATH}`}>
               <IconButton
                 aria-label="Back"
                 _focus={{}}
@@ -172,11 +147,11 @@ function PokemonDetails(): ReactElement {
         <Box as="hr" h="1px" color="#bababa"></Box>
         <Flex justifyContent="center" marginTop="15px" w="85%" margin="auto">
           <Image
-            src={pokemonDetails?.image}
+            src={`/pokemon_imgs/${pokemon_id}.png`}
             alt={pokemonDetails?.name}
             float="left"
             h="250px"
-          ></Image>
+          />
           <Table
             color="black"
             w="10%"
@@ -196,11 +171,11 @@ function PokemonDetails(): ReactElement {
                     bg={color?.[200]}
                     h="25px"
                     borderRadius="6px"
-                    value={adjustStat(pokemonDetails?.stats?.hp)}
+                    value={adjustStat(pokemonDetails?.stats.hp, MAX_STAT_VALUE)}
                   />
                 </Td>
                 <Td paddingTop="4px" paddingBottom="4px">
-                  {pokemonDetails?.stats?.hp}
+                  {pokemonDetails?.stats.hp}
                 </Td>
               </Tr>
               <Tr>
@@ -214,11 +189,14 @@ function PokemonDetails(): ReactElement {
                     bg={color?.[200]}
                     h="25px"
                     borderRadius="6px"
-                    value={adjustStat(pokemonDetails?.stats?.attack)}
+                    value={adjustStat(
+                      pokemonDetails?.stats.attack,
+                      MAX_STAT_VALUE
+                    )}
                   />
                 </Td>
                 <Td paddingTop="4px" paddingBottom="4px">
-                  {pokemonDetails?.stats?.attack}
+                  {pokemonDetails?.stats.attack}
                 </Td>
               </Tr>
               <Tr>
@@ -232,11 +210,14 @@ function PokemonDetails(): ReactElement {
                     bg={color?.[200]}
                     h="25px"
                     borderRadius="6px"
-                    value={adjustStat(pokemonDetails?.stats?.defense)}
+                    value={adjustStat(
+                      pokemonDetails?.stats.defense,
+                      MAX_STAT_VALUE
+                    )}
                   />
                 </Td>
                 <Td paddingTop="4px" paddingBottom="4px">
-                  {pokemonDetails?.stats?.defense}
+                  {pokemonDetails?.stats.defense}
                 </Td>
               </Tr>
               <Tr>
@@ -250,11 +231,14 @@ function PokemonDetails(): ReactElement {
                     bg={color?.[200]}
                     h="25px"
                     borderRadius="6px"
-                    value={adjustStat(pokemonDetails?.stats?.speed)}
+                    value={adjustStat(
+                      pokemonDetails?.stats.speed,
+                      MAX_STAT_VALUE
+                    )}
                   />
                 </Td>
                 <Td paddingTop="4px" paddingBottom="4px">
-                  {pokemonDetails?.stats?.speed}
+                  {pokemonDetails?.stats.speed}
                 </Td>
               </Tr>
               <Tr>
@@ -269,12 +253,13 @@ function PokemonDetails(): ReactElement {
                     h="25px"
                     borderRadius="6px"
                     value={adjustStat(
-                      pokemonDetails?.stats?.["special-attack"]
+                      pokemonDetails?.stats["special-attack"],
+                      MAX_STAT_VALUE
                     )}
                   />
                 </Td>
                 <Td paddingTop="4px" paddingBottom="4px">
-                  {pokemonDetails?.stats?.["special-attack"]}
+                  {pokemonDetails?.stats["special-attack"]}
                 </Td>
               </Tr>
               <Tr>
@@ -289,12 +274,13 @@ function PokemonDetails(): ReactElement {
                     h="25px"
                     borderRadius="6px"
                     value={adjustStat(
-                      pokemonDetails?.stats?.["special-defense"]
+                      pokemonDetails?.stats["special-defense"],
+                      MAX_STAT_VALUE
                     )}
                   />
                 </Td>
                 <Td paddingTop="4px" paddingBottom="4px">
-                  {pokemonDetails?.stats?.["special-defense"]}
+                  {pokemonDetails?.stats["special-defense"]}
                 </Td>
               </Tr>
             </Tbody>

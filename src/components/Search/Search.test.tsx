@@ -8,12 +8,9 @@ import userEvent from "@testing-library/user-event";
 afterEach(cleanup);
 
 it("initial render", () => {
-  const onSearch = jest.fn();
-  const onClear = jest.fn();
-
   const { queryByTitle } = render(
     <BrowserRouter>
-      <Search onSearch={onSearch} onClear={onClear} />
+      <Search />
     </BrowserRouter>
   );
   const container = queryByTitle("container");
@@ -25,12 +22,9 @@ it("initial render", () => {
 });
 
 it("disply clear button after text submitted", () => {
-  const onSearch = jest.fn();
-  const onClear = jest.fn();
-
   const { getByTitle, queryByTitle } = render(
     <BrowserRouter>
-      <Search onSearch={onSearch} onClear={onClear} />
+      <Search />
     </BrowserRouter>
   );
   const input = getByTitle("input");
@@ -40,18 +34,14 @@ it("disply clear button after text submitted", () => {
 
   userEvent.type(input, "test");
   userEvent.keyboard("{Enter}");
-  expect(onSearch).toHaveBeenCalledTimes(1);
   clearButton = queryByTitle("clearButton");
   expect(clearButton).toBeTruthy();
 });
 
 it("hide clear button after clear clicked", () => {
-  const onSearch = jest.fn();
-  const onClear = jest.fn();
-
   const { getByTitle, queryByTitle } = render(
     <BrowserRouter>
-      <Search onSearch={onSearch} onClear={onClear} />
+      <Search />
     </BrowserRouter>
   );
   const input = getByTitle("input");
@@ -63,7 +53,6 @@ it("hide clear button after clear clicked", () => {
   userEvent.keyboard("{Enter}");
   clearButton = getByTitle("clearButton");
   userEvent.click(clearButton);
-  expect(onClear).toHaveBeenCalledTimes(1);
   clearButton = queryByTitle("clearButton");
   expect(clearButton).not.toBeTruthy();
 });
